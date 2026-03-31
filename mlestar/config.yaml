@@ -1,0 +1,57 @@
+# MLE-STAR Deep Agents Configuration
+# Based on arXiv:2506.15692
+
+mode: "mle-star"
+task: null
+data_dir: null
+log_dir: ./logs
+workspace_dir: ./workspaces
+log_level: INFO
+
+# Execution settings
+exec:
+  timeout: 1800
+  device: "0"
+  python: python3
+
+# Sandbox: "remote" (HTTP API) or "local" (subprocess in local folder)
+sandbox:
+  mode: "local"              # "remote" or "local"
+  url: "http://autoscale-yite:8080/run_code"
+  num_retries: 3
+  max_file_size_mb: 2000
+  timeout: 1800
+  max_calls: 100
+  python_path: "python3"   # Python interpreter for local mode
+
+  # In local mode, packages are installed here before running code
+  work_dir: null              # Set at runtime; null = auto-detect
+
+  # If local mode, you can specify a venv or conda path
+  # python_path: "~/code/envs/310/bin/python"
+
+# LLM settings — provider: "azure" or "openrouter"
+llm:
+  provider: "openrouter"
+  model: "deepseek/deepseek-v3.2"
+  temperature: 1
+  max_tokens: 32768
+  api_key: ""
+
+# Web Search (SearXNG)
+web_search:
+  enabled: true
+  base_url: "http://localhost:8888"
+  num_results: 10
+
+# MLE-STAR paper parameters
+mle_star:
+  num_models_to_retrieve: 5   # M
+  max_merge_iterations: 3
+  num_parallel_solutions: 2    # L
+  max_ablation_iterations: 3   # T
+  max_refinement_iterations: 5 # K
+  max_ensemble_iterations: 3   # R
+  max_debug_attempts: 3
+  max_train_samples: 30000
+  max_time: 10800
